@@ -16,21 +16,6 @@ import java.util.stream.Collectors;
 
 public final class ReachabilityAnalyzer {
 
-    public record Result(Set<String> reachable, Set<String> unreachable) {
-
-        public void printSummary() {
-            System.out.printf("  Reachable:   %d classes%n", reachable.size());
-            System.out.printf("  Unreachable: %d classes%n", unreachable.size());
-        }
-
-        public void printFull() {
-            System.out.println("--- REACHABLE ---");
-            reachable.stream().sorted().forEach(c -> System.out.println("  " + c));
-            System.out.println("--- UNREACHABLE ---");
-            unreachable.stream().sorted().forEach(c -> System.out.println("  " + c));
-        }
-    }
-
     public static Result analyze(List<Path> entryJars, List<Path> dependencyJars) throws IOException {
         for (Path p : entryJars) validate(p);
         for (Path p : dependencyJars) validate(p);

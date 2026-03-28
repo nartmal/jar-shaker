@@ -24,7 +24,7 @@ class ReachabilityAnalyzerTest {
                 .addClass("com.example.Orphan").done()
                 .build();
 
-        ReachabilityAnalyzer.Result result = analyze(entry, dep);
+        Result result = analyze(entry, dep);
 
         assertThat(result.unreachable()).contains("com.example.Orphan");
         assertThat(result.reachable()).doesNotContain("com.example.Orphan");
@@ -42,7 +42,7 @@ class ReachabilityAnalyzerTest {
                 .addClass("com.example.Service").done()
                 .build();
 
-        ReachabilityAnalyzer.Result result = analyze(entry, dep);
+        Result result = analyze(entry, dep);
 
         assertThat(result.reachable()).contains("com.example.Service");
         assertThat(result.unreachable()).doesNotContain("com.example.Service");
@@ -65,7 +65,7 @@ class ReachabilityAnalyzerTest {
                 .addClass("com.example.Repository").done()
                 .build();
 
-        ReachabilityAnalyzer.Result result = analyze(entry, dep);
+        Result result = analyze(entry, dep);
 
         assertThat(result.reachable()).contains("com.example.Service", "com.example.Repository");
     }
@@ -89,7 +89,7 @@ class ReachabilityAnalyzerTest {
                 .addClass("com.example.Unused").done()
                 .build();
 
-        ReachabilityAnalyzer.Result result = analyze(entry, dep);
+        Result result = analyze(entry, dep);
 
         assertThat(result.reachable()).contains("com.example.Used");
         assertThat(result.unreachable()).contains("com.example.Unused");
@@ -103,7 +103,7 @@ class ReachabilityAnalyzerTest {
                 .addClass("com.example.AnotherEntryClass").done()
                 .build();
 
-        ReachabilityAnalyzer.Result result = ReachabilityAnalyzer.analyze(
+        Result result = ReachabilityAnalyzer.analyze(
                 List.of(entry.toInputStream()), List.of());
 
         assertThat(result.reachable()).contains("com.example.App", "com.example.AnotherEntryClass");
@@ -114,7 +114,7 @@ class ReachabilityAnalyzerTest {
     // Helper
     // -------------------------------------------------------------------------
 
-    private static ReachabilityAnalyzer.Result analyze(InMemoryJar entry, InMemoryJar dep)
+    private static Result analyze(InMemoryJar entry, InMemoryJar dep)
             throws IOException {
         return ReachabilityAnalyzer.analyze(
                 List.of(entry.toInputStream()),

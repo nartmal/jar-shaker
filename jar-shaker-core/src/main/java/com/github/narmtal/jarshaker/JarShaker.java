@@ -2,7 +2,6 @@ package com.github.narmtal.jarshaker;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,12 +41,8 @@ public class JarShaker {
         System.out.println("  Deps:   " + depJars);
         System.out.println();
 
-        ReachabilityAnalyzer.Result result = ReachabilityAnalyzer.analyze(entryJars, depJars);
-
-        if (verbose) {
-            result.printFull();
-        } else {
-            result.printSummary();
-        }
+        Result result = ReachabilityAnalyzer.analyze(entryJars, depJars);
+        ReportWriter writer = verbose ? ResultPrinter.verbose() : ResultPrinter.summary();
+        writer.write(result);
     }
 }
